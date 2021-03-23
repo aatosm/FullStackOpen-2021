@@ -54,14 +54,30 @@ const App = () => {
     setState(newState)
   }
 
+  const getHighest = () => {
+    return state.reduce((prev, current) => {
+      return (prev.votes > current.votes) ? prev : current
+    })
+  }
+
   return (
     <div>
       <div>
-        <p>{selected.text}</p>
-        <p>has {selected.votes} votes</p>
+        <h1>Anecdote of the day</h1>
+        <div>
+          <p>{selected.text}</p>
+          <p>has {selected.votes} votes</p>
+        </div>
+        <button onClick={vote}>Vote</button>
+        <button onClick={getRandomAnecdote}>Next anecdote</button>
       </div>
-      <button onClick={vote}>Vote</button>
-      <button onClick={getRandomAnecdote}>Next anecdote</button>
+      <div>
+        <h1>Anecdote with most votes</h1>
+        <div>
+          <p>{getHighest().text}</p>
+          <p>has {getHighest().votes} votes</p>
+        </div>
+      </div>
     </div>
   )
 }
