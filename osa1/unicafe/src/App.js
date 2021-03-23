@@ -1,36 +1,48 @@
 import React, { useState } from 'react'
 
 const Feedback = (props) => {
+  const { setGood, setNeutral, setBad } = props
   return (
     <div>
       <h1>Give feedback</h1>
-      <button onClick={props.setGood}>good</button>
-      <button onClick={props.setNeutral}>neutral</button>
-      <button onClick={props.setBad}>bad</button>
+      <Button name="good" clickHandler={setGood} />
+      <Button name="neutral" clickHandler={setNeutral} />
+      <Button name="bad" clickHandler={setBad} />
     </div>
   )
 }
 
+const Button = ({ clickHandler, name }) =>
+  <button onClick={clickHandler}>{name}</button>
+
 const Statistics = (props) => {
+  const { good, neutral, bad, all, average, positives } = props
   return (
     <div>
       <h1>Statistics</h1>
-      { props.all === 0 
+      { all === 0 
       ?
       <div>
         <p>No feedback given</p>
       </div>
       :
       <div>
-        <p>good: {props.good}</p>
-        <p>neutral: {props.neutral}</p>
-        <p>bad: {props.bad}</p>
-        <p>all: {props.all}</p>
-        <p>average: {props.average}</p>
-        <p>positive: {props.positives}%</p>
+        <StatisticLine text="good" value={good} />
+        <StatisticLine text="neutral" value={neutral} />
+        <StatisticLine text="bad" value={bad} />
+        <StatisticLine text="all" value={all} />
+        <StatisticLine text="average" value={average} />
+        <StatisticLine text="positive" value={positives} char="%" />
       </div>
-    }
+      }
     </div> 
+  )
+}
+
+const StatisticLine = (props) => {
+  const { text, value, char } = props
+  return (
+    <p>{text}: {value}{char}</p>
   )
 }
 
